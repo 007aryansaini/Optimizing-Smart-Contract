@@ -7,3 +7,68 @@
                               
                       #Note : The maximum no. of transaction in an ethereum block can be = 30 million / 21000 = 1428 transactions.
                               Since a minimum typical transaction is of 21000 gas. 
+                              
+                      #Note : Execution cost is a subset of transaction cost. 
+ 
+                             Execution cost : All cost related to the internal storage and manipulation of the smart contract.
+                             
+                             
+                             Transaction cost : - All cost related to the internal storage and manipulation of the smart contract.
+                                                - The cost of sending data to the blockchain.
+                           
+                           
+--> Gas consumption : 
+
+              - For multiplication we can use left shift operator.
+              - For division we can use right shift operator.
+              
+                      By using these two we can reduce the gas cost.
+                      
+                      #NOTE IMPORTANT : It is upto the developer which opcode he should use so that the Integer overflow condition does not occur.
+                      
+                      It not always suggested that the right and left shift should be used. You have to observe then then take the decision according to it.
+                      
+                      
+--> Type of transaction : 
+
+             - Suppose we simply send ether from one account to another account, now if send do this transaction without hex data associated with it 
+               then it will cost less as compared to the transaction which have the hex data associated with it.
+               
+               
+--> Payable vs Non payanle : 
+
+         In this the payable function costs less gas as compared to the non payable function. This is because the opcode in the payable function are 
+         less as compared to the non payable functions because the non-payable function have an revert associated with it because it have to check 
+         whether there is any ether attached or not if ether is associated wtih the function then it should revert.
+         
+         
+         
+--> Memory :  
+
+         - Avoid the use of state variables as much as you can.
+         - In Ethereum data is stored in 32 bytes of slots.
+         
+         
+         
+         Like we take an example we declare two uint variables uint8 a = 12 and uint256 a = 12;
+         Then we will observe that uint256 will cost less amount of gas as compared to uint8 because in uint 8 padding are done to the remaining
+         bits will will cost higher gas than uint256.
+         
+         
+         
+   # Important Concept : 
+   
+          Variable Packing : We can reduce by this method. 
+           
+           eg : 
+    // uint128 a= 10;
+    // uint256 b = 12;
+    // uint128 c = 9;
+
+    uint128 a = 10;
+    uint128 b =9;
+    uint256 c = 12;
+    
+     In the above example as we can see that the cost in the second type of declaration is less due to variable packing it is a conceptin which ethereum check if there
+     are empt spaces left so that the next variable can fit in that space or not if it fits in that space then no new slot is created else padding is done 
+     and the next memory is used that is of 32 bytes.
