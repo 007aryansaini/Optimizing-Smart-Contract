@@ -1,0 +1,9 @@
+-->    Transaction fees = ( gas consumed * gas price ) * ( ether / 10^9 )
+
+                       Only we can reduce the gas consumtipn then only our transaction fees is reduced.
+                       
+                      #Note : The size of the block of the bitcoin blockchain is 1 MB, Whereas the size of one block of ethereum blockchain is 
+                              " 30 million gas ".
+                              
+                      #Note : The maximum no. of transaction in an ethereum block can be = 30 million / 21000 = 1428 transactions.
+                              Since a minimum typical transaction is of 21000 gas. 
