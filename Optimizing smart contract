@@ -1,3 +1,14 @@
+
+----------------------------------------------------------- Optimizing smart contract -------------------------------------------------------------
+--> Factors affecting gas consumption : 
+
+        1. Opcodes
+        2. State change
+        3. Transactions
+        4. Memory
+
+
+
 -->    Transaction fees = ( gas consumed * gas price ) * ( ether / 10^9 )
 
                        Only we can reduce the gas consumtipn then only our transaction fees is reduced.
@@ -72,3 +83,79 @@
      In the above example as we can see that the cost in the second type of declaration is less due to variable packing it is a conceptin which ethereum check if there
      are empt spaces left so that the next variable can fit in that space or not if it fits in that space then no new slot is created else padding is done 
      and the next memory is used that is of 32 bytes.
+     
+     
+     
+ --> Example :  
+ 
+ // SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+/*
+contract finalContract {
+
+     uint[] public array;
+     uint public sum;
+
+     constructor(){
+             array = [ 1,2,3,4,5];
+         }
+
+         function loop() external {
+              for( uint i = 0 ; i < array.length ; i++ ){
+              sum += array[i];
+                  }
+             }
+
+    }
+
+
+*/
+
+
+// Optimized Contract :  
+
+//3 Steps : 
+
+
+/*  
+        1. We can create a local variable sum so that we do not have to read the sum state variable
+           again and again and then set it to the state variable sum.
+
+        2. We can create a copy of the array in the function so that we do not have to read the
+           array state variable again and again.    
+
+        3. Since we know that the value of i will never overflow so we can put the value of i 
+           in unchecked so that not every time the value if i increases it should not check the overflow
+           condition.
+
+ */
+contract finalContract {
+
+     uint[] public array;
+     uint public sum;
+
+     constructor(){
+             array = [ 1,2,3,4,5];
+         }
+
+
+         function uncheckedVal(uint _num) private pure returns(uint){
+                unchecked{
+                      return _num + 1;
+                }
+         } 
+
+         function loop() external {
+              
+              uint[] memory _array = array;
+              uint _sum;
+              for( uint i = 0 ; i < _array.length ; i = uncheckedVal(i) ){
+              _sum += _array[i];
+                  }
+
+                  sum = _sum;
+             }
+
+    }
+
